@@ -7,6 +7,7 @@ var last_continue_click = null;
 var max_time = 30000;
 var start_time = Date.now();
 var timer_width = 354;
+var continue_offset_calculator = 0;
 
 async function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
 
@@ -104,6 +105,7 @@ async function clickAction(id) {
     document.getElementById("continue").setAttribute("visible", true);
     document.getElementById(id).setAttribute("state", rand_array[translateIDs(id)] === await requestResource("antwortrichtigkeit.php?id=" + used_questions[used_questions.length - 1]) ? "right" : "wrong");
     clicked = true;
+    continue_offset_calculator = Date.now();
 }
 
 function clickContinueAction() {
@@ -127,13 +129,18 @@ function clickContinueAction() {
         start_time -= max_time;
         getWeiterFeld().innerText = "Reset";
         getWeiterFeld().setAttribute("visible", true);
-    } else
-        neueFrage();
+    } else {
+        neueFrage()
+        start_time += Date.now() - continue_offset_calculator
+        newWidth()
+    };
 }
 
 main(false);
 
 async function newWidth() {
+    if (clicked)
+        return
     if (Date.now() - start_time > max_time) {
         for (l = 0; l < 3; l++) {
             if (getStatusFelder()[l].hasAttribute("state"))
