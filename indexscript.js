@@ -1,13 +1,14 @@
-// TODO: die data, die in in den html elementen gespeichert wird, in public vars ändern
-
 var iteration_count = 0;
 var clicked = false;
 var used_questions = [];
 var rand_array = [];
 var fragen = null;
-var last_continue_click = null
+var last_continue_click = null;
+var max_time = 30000;
+var start_time = Date.now();
+var timer_width = 354;
 
-async function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)) }
+async function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
 
 async function requestResource(name) {
     return new Promise(function (resolve) {
@@ -92,6 +93,8 @@ async function main(resetorelse) {
     neueFrage();
     getWeiterFeld().innerText = "Weiter →";
     getWeiterFeld().setAttribute("visible", false);
+    start_time = Date.now()
+    newWidth()
 }
 
 
@@ -121,6 +124,7 @@ function clickContinueAction() {
     iteration_count += 1;
     clicked = false;
     if (iteration_count > 2) {
+        start_time -= max_time;
         getWeiterFeld().innerText = "Reset";
         getWeiterFeld().setAttribute("visible", true);
     } else
@@ -128,3 +132,21 @@ function clickContinueAction() {
 }
 
 main(false);
+
+async function newWidth() {
+    if (Date.now() - start_time > max_time) {
+        for (l = 0; l < 3; l++) {
+            if (getStatusFelder()[l].hasAttribute("state"))
+                continue
+            getStatusFelder()[l].setAttribute("state", "wrong");
+            await sleep(1000);
+        }
+        getWeiterFeld().innerText = "Reset";
+        getWeiterFeld().setAttribute("visible", true);
+        iteration_count = 3;
+        clicked = true;
+        return
+    }
+    document.getElementById("timelist").style.width = timer_width * (1 - ((Date.now() - start_time) / max_time)) + "px";
+    setTimeout(newWidth, 10);
+}

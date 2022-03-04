@@ -6,9 +6,13 @@
         {
             "label": "Copy",
             "type": "shell",
-            "command": "make copy",
+            "command": "make",
             "problemMatcher": [],
-            "isBackground": false
+            "isBackground": false,
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
         }
     ]
 }
