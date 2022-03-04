@@ -5,6 +5,7 @@ var clicked = false;
 var used_questions = [];
 var rand_array = [];
 var fragen = null;
+var last_continue_click = null
 
 async function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)) }
 
@@ -85,7 +86,8 @@ async function main(resetorelse) {
     if (resetorelse)
         for (i = 2; i >= 0; i--) {
             getStatusFelder()[i].removeAttribute("state");
-            await sleep(1000);
+            await sleep(Math.min(Date.now() - last_continue_click, 1000));
+            last_continue_click -= 1000;
         }
     neueFrage();
     getWeiterFeld().innerText = "Weiter →";
@@ -112,8 +114,10 @@ function clickContinueAction() {
     for (i = 0; i < 4; i++)
         if (getAntwortFelder()[i].getAttribute("state") === "null")
             continue;
-        else
+        else {
             getStatusFelder()[iteration_count].setAttribute("state", getAntwortFelder()[i].getAttribute("state"));
+            last_continue_click = Date.now()
+        }
     iteration_count += 1;
     clicked = false;
     if (iteration_count > 2) {
