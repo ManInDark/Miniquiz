@@ -23,7 +23,7 @@ h1 {
 }
 
 p {
-    margin: 16px
+    margin: 2vh
 }
 
 button {
@@ -43,7 +43,7 @@ button {
 .answer-container {
     width:74vw;
     margin: auto;
-    height: 12vh;
+    height: 24vh;
 }
 
 .answers {
@@ -60,13 +60,13 @@ button {
 }
 
 .answers[state="wrong"] {
-    background-color: crimson;
+    background-color: #f00;
 }
 
 .statusfeld {
     fill: lightgray;
     transition: width 1s linear, fill 1s linear;
-    width: 0px;
+    width: 0vh;
 }
 
 .statusfeld[state="right"] {
@@ -74,7 +74,7 @@ button {
 }
 
 .statusfeld[state="wrong"] {
-    fill: rgb(220, 20, 60);
+    fill: #f00;
 }
 
 .statusfeld[state] {
@@ -98,8 +98,8 @@ button {
 @media only screen and (max-width: 768px){
     button {
         font-size: 3vh;
-
     }
+
     #question {
         font-size: 4vh;
     }
