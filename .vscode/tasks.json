@@ -6,8 +6,9 @@
         {
             "label": "Copy",
             "type": "shell",
-            "command": "./copytoxampp.sh",
-            "problemMatcher": []
+            "command": "make copy",
+            "problemMatcher": [],
+            "isBackground": false
         }
     ]
 }

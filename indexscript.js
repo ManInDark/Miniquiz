@@ -8,20 +8,20 @@ var fragen = null
 
 async function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)) }
 
-async function getFragen() {
-    return new Promise(function (resolve, reject) {
-        request = new XMLHttpRequest()
-        request.open('GET', "fragen.json")
-        request.responseType = "json"
-        request.send()
+async function requestResource(name) {
+    return new Promise(function (resolve) {
+        request = new XMLHttpRequest();
+        request.open("GET", name);
+        request.responseType = "json";
+        request.send();
         request.onload = () => {
-            resolve(request.response)
+            resolve(request.response);
         }
     })
 }
 
 function getFragenFeld() {
-    return document.getElementById("question")
+    return document.getElementById("question");
 }
 
 function getAntwortFelder() {
@@ -69,15 +69,14 @@ function neueParameter(frage) {
 
 async function neueFrage() {
     getAntwortFelder().forEach((a) => { a.setAttribute("state", null) })
-    fragen = fragen === null ? await getFragen() : fragen
-    if (used_questions.length >= fragen.length) // Zurücksetzen der Fragen, sollten alle durch sein
+    if (used_questions.length >= await requestResource("menge.php")) // Zurücksetzen der Fragen, sollten alle durch sein
         used_questions = []
 
-    do
-        new_index = Math.floor(Math.random() * fragen.length)
-    while (used_questions.includes(new_index))
-    used_questions.push(new_index)
-    neueParameter(fragen[new_index])
+    do {
+        nFrage = await requestResource("fragen.php")
+    } while (used_questions.includes(nFrage[0]))
+    used_questions.push(nFrage[0])
+    neueParameter(nFrage[1])
 }
 
 async function main(resetorelse) {
