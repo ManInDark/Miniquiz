@@ -5,5 +5,5 @@ $sqlquery = $connection->prepare("SELECT id, objekt FROM fragen ORDER BY RAND() 
 $sqlquery->execute();
 $sqlquery->bind_result($id, $frage);
 $sqlquery->fetch();
-echo "[" . $id . "," . $frage . "]";
+echo "[" . $id . ',"' . $frage . '"]';
 db_connection_close($connection);

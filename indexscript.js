@@ -1,7 +1,6 @@
 var iteration_count = 0;
 var clicked = false;
 var used_questions = [];
-var rand_array = [];
 var fragen = null;
 var last_continue_click = null;
 var max_time = 30000;
@@ -15,7 +14,6 @@ async function requestResource(name) {
     return new Promise(function (resolve) {
         request = new XMLHttpRequest();
         request.open("GET", name);
-        request.responseType = "json";
         request.send();
         request.onload = () => {
             resolve(request.response);
@@ -60,26 +58,26 @@ function translateIDs(id) {
 }
 
 // Fügt die Parameter aus frage in das document ein
-function neueParameter(frage) {
-    if (!typeof (frage["frage"]) === "string")
-        throw new Error("Frage ist kein String");
-    if (!typeof (frage["antworten"]) === typeof ([]))
-        throw new Error("Antworten ist kein Array");
-    getFragenFeld().innerText = frage["frage"];
-    rand_array = randomSort([0, 1, 2, 3]);
-    getAntwortFelder().forEach((element, i) => { element.innerText = frage["antworten"][rand_array[i]]; });
+function neueParameter(frage, antworten) {
+    if (!typeof (frage) === String)
+        throw new Error("frage ist kein String");
+    if (!typeof (antworten) === typeof ([]))
+        throw new Error("antworten ist kein Array");
+    getFragenFeld().innerText = frage;
+    rand = randomSort([...Array(4).keys()]);
+    getAntwortFelder().forEach((element, i) => { element.innerText = antworten[rand[i]]; });
 }
 
 async function neueFrage() {
     getAntwortFelder().forEach((a) => { a.setAttribute("state", null) });
-    if (used_questions.length >= await requestResource("menge.php")) // Zurücksetzen der Fragen, sollten alle durch sein
+    if (used_questions.length >= JSON.parse(await requestResource("menge.php"))) // Zurücksetzen der Fragen, sollten alle durch sein
         used_questions = [];
 
     do {
-        nFrage = await requestResource("fragen.php");
+        nFrage = JSON.parse(await requestResource("fragen.php"));
     } while (used_questions.includes(nFrage[0]));
     used_questions.push(nFrage[0]);
-    neueParameter(nFrage[1]);
+    neueParameter(nFrage[1], JSON.parse(await requestResource("antworten.php?id=" + nFrage[0])));
 }
 
 async function main(resetorelse) {
@@ -103,7 +101,7 @@ async function clickAction(id) {
     if (clicked || getWeiterFeld().innerHTML === "Reset")
         return;
     document.getElementById("continue").setAttribute("visible", true);
-    document.getElementById(id).setAttribute("state", rand_array[translateIDs(id)] === await requestResource("antwortrichtigkeit.php?id=" + used_questions[used_questions.length - 1]) ? "right" : "wrong");
+    document.getElementById(id).setAttribute("state", await requestResource("antwortrichtigkeit.php?id=" + used_questions[used_questions.length - 1]) === document.getElementById(id).innerText ? "right" : "wrong");
     clicked = true;
     continue_offset_calculator = Date.now();
 }
