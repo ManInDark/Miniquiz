@@ -1,7 +1,6 @@
 var iteration_count = 0;
 var clicked = false;
 var used_questions = [];
-var fragen = null;
 var last_continue_click = null;
 var max_time = 30000;
 var start_time = Date.now();
@@ -30,7 +29,7 @@ function getAntwortFelder() {
 }
 
 function getStatusFelder() {
-    return document.getElementsByClassName("statusfeld");
+    return [...document.getElementsByClassName("statusfeld")];
 }
 
 function getWeiterFeld() {
@@ -49,6 +48,7 @@ function randomSort(list) {
         newlist.push(list[nr]);
         used.push(nr);
     }
+    delete used;
     return newlist;
 }
 
@@ -72,12 +72,12 @@ async function neueFrage() {
     getAntwortFelder().forEach((a) => { a.setAttribute("state", null) });
     if (used_questions.length >= JSON.parse(await requestResource("menge.php"))) // Zurücksetzen der Fragen, sollten alle durch sein
         used_questions = [];
-
     do {
         nFrage = JSON.parse(await requestResource("fragen.php"));
     } while (used_questions.includes(nFrage[0]));
     used_questions.push(nFrage[0]);
     neueParameter(nFrage[1], JSON.parse(await requestResource("antworten.php?id=" + nFrage[0])));
+    delete nFrage;
 }
 
 async function main(resetorelse) {
@@ -86,14 +86,13 @@ async function main(resetorelse) {
     if (resetorelse)
         for (i = 2; i >= 0; i--) {
             getStatusFelder()[i].removeAttribute("state");
-            await sleep(Math.min(Date.now() - last_continue_click, 1000));
-            last_continue_click -= 1000;
+            await sleep(Math.min(Date.now() - last_continue_click, 1000)).then(() => { last_continue_click -= 1000; });
         }
     neueFrage();
     getWeiterFeld().innerText = "Weiter →";
     getWeiterFeld().setAttribute("visible", false);
-    start_time = Date.now()
-    newWidth()
+    start_time = Date.now();
+    newWidth();
 }
 
 
@@ -119,7 +118,7 @@ function clickContinueAction() {
             continue;
         else {
             getStatusFelder()[iteration_count].setAttribute("state", getAntwortFelder()[i].getAttribute("state"));
-            last_continue_click = Date.now()
+            last_continue_click = Date.now();
         }
     iteration_count += 1;
     clicked = false;
@@ -128,29 +127,30 @@ function clickContinueAction() {
         getWeiterFeld().innerText = "Reset";
         getWeiterFeld().setAttribute("visible", true);
     } else {
-        neueFrage()
-        start_time += Date.now() - continue_offset_calculator
-        newWidth()
+        neueFrage();
+        start_time += Date.now() - continue_offset_calculator;
+        newWidth();
     };
 }
 
 main(false);
 
+// Adjusts the timer's width
 async function newWidth() {
     if (clicked)
-        return
+        return;
     if (Date.now() - start_time > max_time) {
-        for (l = 0; l < 3; l++) {
-            if (getStatusFelder()[l].hasAttribute("state"))
-                continue
-            getStatusFelder()[l].setAttribute("state", "wrong");
+        iteration_count = 3;
+        clicked = true;
+        for (i = 0; i < 3; i++) {
+            if (getStatusFelder()[i].hasAttribute("state"))
+                continue;
+            getStatusFelder()[i].setAttribute("state", "wrong");
             await sleep(1000);
         }
         getWeiterFeld().innerText = "Reset";
         getWeiterFeld().setAttribute("visible", true);
-        iteration_count = 3;
-        clicked = true;
-        return
+        return;
     }
     document.getElementById("timelist").style.width = timer_width * (1 - ((Date.now() - start_time) / max_time)) + "px";
     setTimeout(newWidth, 10);
