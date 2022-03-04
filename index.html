@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizduell</title>
+    <link rel="icon" type="text/svg" href="favicon.svg" />
+    <script type="text/javascript" src="indexscript.js" defer></script>
+    <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+    <h1>Quizduell</h1>
+    <svg style="width: 60vw" viewBox="0 0 300 30" id="statuslist">
+        <rect x=" 10" y="5" width="270" height="10" fill="lightgray" stroke="black" stroke-width="2px" />
+        <rect x=" 10" y="5" width="90" height="10" stroke="black" stroke-width="2px" class="statusfeld" />
+        <rect x="100" y="5" width="90" height="10" stroke="black" stroke-width="2px" class="statusfeld" />
+        <rect x="190" y="5" width="90" height="10" stroke="black" stroke-width="2px" class="statusfeld" />
+    </svg>
+    <b>
+        <p id="question">Hier wird die Frage erscheinen</p>
+    </b>
+    <div class="answer-container">
+        <button id="answer1" class="answers" onclick="clickAction(id)">Antwort 1 wird hier erscheinen</button>
+        <button id="answer2" class="answers" onclick="clickAction(id)">Antwort 2 wird hier erscheinen</button>
+    </div>
+    <div class="answer-container">
+        <button id="answer3" class="answers" onclick="clickAction(id)">Antwort 3 wird hier erscheinen</button>
+        <button id="answer4" class="answers" onclick="clickAction(id)">Antwort 4 wird hier erscheinen</button>
+    </div>
+        <button id="continue" onclick="clickContinueAction()"></button>
+</body>
+
+</html>

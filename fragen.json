@@ -1,0 +1,92 @@
+[
+    {
+        "frage": "Wie viele Tage hat eine Woche?",
+        "antworten": [
+            "7",
+            "5",
+            "6",
+            "8"
+        ]
+    },
+    {
+        "frage": "Wie viele Stunden hat ein Tag?",
+        "antworten": [
+            "24",
+            "20",
+            "27",
+            "48"
+        ]
+    },
+    {
+        "frage": "Welche Tastenkombination ist nötig für {} mit macOS?",
+        "antworten": [
+            "Alt + 8/9",
+            "Ctrl + 8/9",
+            "Alt + 5/6",
+            "Ctrl + 5/6"
+        ]
+    },
+    {
+        "frage": "Welche Tastenkombination ist nötig für [] mit macOS?",
+        "antworten": [
+            "Alt + 5/6",
+            "Ctrl + 5/6",
+            "Alt + 8/9",
+            "Ctrl + 5/6"
+        ]
+    },
+    {
+        "frage": "Wie viele Millimeter sind ein Dezimeter?",
+        "antworten": [
+            "100",
+            "10",
+            "1000",
+            "10000"
+        ]
+    },
+    {
+        "frage": "Wie viele Meter sind ein Dekameter?",
+        "antworten": [
+            "10",
+            "100",
+            "1000",
+            "10000"
+        ]
+    },
+    {
+        "frage": "Das Windows Gegenstück zum Finder heißt?",
+        "antworten": [
+            "Explorer",
+            "Atlas",
+            "Fundbüro",
+            "Erkunder"
+        ]
+    },
+    {
+        "frage": "Microsofts Version von Siri heißt?",
+        "antworten": [
+            "Cortana",
+            "Alexa",
+            "Bixby",
+            "Snips"
+        ]
+    },
+    {
+        "frage": "Was hat Caesar mit 'Alea iacta est' gemeint?",
+        "antworten": [
+            "'Die Würfel sind gefallen.'",
+            "'Ich kam, sah und siegte.'",
+            "'Du auch, Brutus?'",
+            "'Kaffee bitte.'"
+        ]
+    },
+    {
+        "frage": "Wer sagte 'Ich bin ein Berliner'?",
+        "antworten": [
+            "John F. Kennedy",
+            "Gerhard Schröder",
+            "Helmut Schmidt",
+            "Helmut Kohl"
+        ]
+    }
+]

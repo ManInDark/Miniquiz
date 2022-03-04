@@ -1,0 +1,106 @@
+:root {
+    --font: Arial, Helvetica, sans-serif;
+    --website-background-color: rgb(98, 211, 255);
+}
+
+body {
+    background-color: var(--website-background-color);
+}
+
+* {
+    text-align: center;
+}
+
+::selection {
+    background: none;
+}
+
+h1 {
+    font-family: Noteworthy, var(--font);
+    font-size: 10vh;
+    margin: auto;
+    top: 1vh;
+}
+
+p {
+    margin: 16px
+}
+
+button {
+    border: 1vh solid black;
+    border-radius: 0.75vh;
+    font-size: 3vh;
+    font-family: var(--font);
+    word-wrap: normal;
+    overflow: auto;
+}
+
+#question {
+    font-size: 6vh;
+    font-family: var(--font);
+}
+
+.answer-container {
+    width:74vw;
+    margin: auto;
+    height: 12vh;
+}
+
+.answers {
+    width: 35vw;
+    height: 10vh;
+    margin: 1vh 1vw;
+    display: inline;
+    position: relative;
+    float: left;
+}
+
+.answers[state="right"] {
+    background-color: greenyellow;
+}
+
+.answers[state="wrong"] {
+    background-color: crimson;
+}
+
+.statusfeld {
+    fill: lightgray;
+    transition: width 1s linear, fill 1s linear;
+    width: 0px;
+}
+
+.statusfeld[state="right"] {
+    fill: rgb(173, 255, 47);
+}
+
+.statusfeld[state="wrong"] {
+    fill: rgb(220, 20, 60);
+}
+
+.statusfeld[state] {
+    width: 90px;
+}
+
+#continue, #continue[visible="false"] {
+    display: block;
+    width: 60vw;
+    height: 10vh;
+    margin: auto;
+    margin-top: 4vh;
+    visibility: hidden;
+}
+
+#continue[visible="true"] {
+    visibility: visible;
+}
+
+
+@media only screen and (max-width: 768px){
+    button {
+        font-size: 3vh;
+
+    }
+    #question {
+        font-size: 4vh;
+    }
+}
