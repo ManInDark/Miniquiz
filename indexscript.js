@@ -1,11 +1,11 @@
-var iteration_count = 0;
-var clicked = false;
-var used_questions = [];
-var last_continue_click = null;
-var max_time = 30000;
-var start_time = Date.now();
-var timer_width = 354;
-var continue_offset_calculator = 0;
+let iteration_count = 0;
+let clicked = false;
+let used_questions = [];
+let last_continue_click = null;
+let max_time = 30000;
+let start_time = Date.now();
+let timer_width = 354;
+let continue_offset_calculator = 0;
 
 async function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
 
