@@ -1,8 +1,9 @@
 <?php
-$connection = new mysqli("localhost", "testuser", "testuser", "quizduell");
+include "./database.php";
+$connection = db_connection_open();
 $sqlquery = $connection->prepare("SELECT COUNT( DISTINCT(id) ) as Amount FROM fragen;");
 $sqlquery->execute();
 $sqlquery->bind_result($amount);
 $sqlquery->fetch();
 echo $amount;
-$sqlquery->close();
+db_connection_close($connection);

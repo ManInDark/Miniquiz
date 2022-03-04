@@ -1,8 +1,9 @@
 <?php
-$connection = new mysqli("localhost", "testuser", "testuser", "quizduell");
+include "./database.php";
+$connection = db_connection_open();
 $sqlquery = $connection->prepare("SELECT * FROM fragen ORDER BY RAND() LIMIT 1;");
 $sqlquery->execute();
 $sqlquery->bind_result($id, $frage);
 $sqlquery->fetch();
 echo "[" . $id . "," . $frage . "]";
-$sqlquery->close();
+db_connection_close($connection);
