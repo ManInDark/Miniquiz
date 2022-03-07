@@ -1,0 +1,15 @@
+server {
+	listen 80;
+	listen 443;
+	access_log /var/log/nginx/access.log sidelog;
+	rewrite ^/$ /index.html;
+
+	location ~ \.php$ {
+		include snippets/fastcgi-php.conf;
+		fastcgi_pass unix:/php.sock;
+	}
+
+	root /sites;
+	try_files $uri $uri.html $uri.css $uri.js =404;
+
+}
